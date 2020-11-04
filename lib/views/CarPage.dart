@@ -23,6 +23,7 @@ class _CarPageState extends State<CarPage> {
 	TextEditingController _locale = TextEditingController();
 
 	List<Car> _listCar = List();
+	bool _validationLot = false;
 
 	@override
 	void initState() {
@@ -38,7 +39,7 @@ class _CarPageState extends State<CarPage> {
 
 	bool _hasCarInLot(String locale) {
 		for(Car car in _listCar) {
-			if (car.locale == locale) {
+			if (car.locale.toString() == locale) {
 				return false;
 			}
 		}
@@ -60,23 +61,25 @@ class _CarPageState extends State<CarPage> {
 
 		String _localeConvert = _locale.text.toString().toUpperCase().replaceAll("E", "");
 		int _localeInt = int.parse(_localeConvert);
-		// if (_localeInt > 10) {
-		// 	return ""
-		// }
+		if (_localeInt > 20) {
+			_validationLot = false;
+		} else {
+			if (_hasCarInLot(_localeInt.toString())) {
+				_validationLot = true;
+				Car car = Car();
+				car.name = _name.text;
+				car.board = _board.text;
+				car.color = _color.text;
+				car.owner = _owner.text;
+				car.phone = _phone.text;
+				car.locale = _localeInt.toString();
+				car.time = time;
 
-		if (_hasCarInLot(_localeInt.toString())) {
-			Car car = Car();
-			car.name = _name.text;
-			car.board = _board.text;
-			car.color = _color.text;
-			car.owner = _owner.text;
-			car.phone = _phone.text;
-			car.locale = _localeInt.toString();
-			car.time = time;
-
-			CarController carController = CarController();
-			carController.insert(car);
+				CarController carController = CarController();
+				carController.insert(car);
+			}
 		}
+
 	}
 
 	String _getTime() {
@@ -95,91 +98,91 @@ class _CarPageState extends State<CarPage> {
 
     @override
     Widget build(BuildContext context) {
-        return WillPopScope(
-			// onWillPop: ,
-			child: Container(
-				decoration: BoxDecoration(
-					gradient: LinearGradient(
-						begin: Alignment.topCenter,
-						end: Alignment.bottomRight,
-						colors: <Color>[
-							Color(0xFF2B0948),
-							Color(0xFFCE653B)
-						]
-					)
-				),
-				child: Scaffold(
-					backgroundColor: Colors.transparent,
-					appBar: AppBar(
-						title: widget.id != null ? Text("Editar Veículo") : Text("Inserir Veículo"),
-						flexibleSpace: Container(
-							decoration: BoxDecoration(
-								gradient: LinearGradient(
-									begin: Alignment.topLeft,
-									end: Alignment.bottomRight,
-									colors: <Color>[
-										Color(0xFF2B0948),
-										Color(0xFFCE653B)
-									]
-								)
-							)
-						),
-						centerTitle: true
-					),
-					floatingActionButton: FloatingActionButton.extended(
-						onPressed: () async {
-							if (_formKey.currentState.validate()) {
-								_insert();
-								await Navigator.pop(context);
-							}
-						},
-						icon: Icon(Icons.thumb_up),
-						label: Text('Confirmar'),
-						elevation: 10.0,
-						backgroundColor: Color(0xFF72351D)
-					),
-					floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-					body: SingleChildScrollView(
-						padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 80.0),
-						child: Form(
-							key: _formKey,
-							child: Column(
-								children: <Widget>[
-									textFormField(
-										controller: _name, 
-										error: "Insira o nome do véiculo", 
-										label: "Nome do Veículo"
-									),
-									textFormField(
-										controller: _board, 
-										error: "Insira a placa", 
-										label: "Placa"
-									),
-									textFormField(
-										controller: _color,
-										error: "Insira a cor", 
-										label: "Cor"
-									),
-									textFormField(
-										controller: _owner, 
-										error: "Insira o proprietário do veículo", 
-										label: "Proprietário"
-									),
-									textFormField(
-										controller: _phone, 
-										error: "Insira a telefone", 
-										label: "Telefone",
-										keyBoard: true
-									),
-									textFormField(
-										controller: _locale, 
-										error: "Insira o local do veículo", 
-										label: "Local",
-										keyBoard: true,
-										local: true
-									)
+        return Container(
+			decoration: BoxDecoration(
+				gradient: LinearGradient(
+					begin: Alignment.topCenter,
+					end: Alignment.bottomRight,
+					colors: <Color>[
+						Color(0xFF2B0948),
+						Color(0xFFCE653B)
+					]
+				)
+			),
+			child: Scaffold(
+				backgroundColor: Colors.transparent,
+				appBar: AppBar(
+					title: widget.id != null ? Text("Editar Veículo") : Text("Inserir Veículo"),
+					flexibleSpace: Container(
+						decoration: BoxDecoration(
+							gradient: LinearGradient(
+								begin: Alignment.topLeft,
+								end: Alignment.bottomRight,
+								colors: <Color>[
+									Color(0xFF2B0948),
+									Color(0xFFCE653B)
 								]
 							)
+						)
+					),
+					centerTitle: true
+				),
+				floatingActionButton: FloatingActionButton.extended(
+					onPressed: () {
+						if (_formKey.currentState.validate()) {
+							_insert();
+							_validationLot == false ? 
+								_showAlertDialog(context) :
+								Navigator.pop(context);
+						}
+					},
+					icon: Icon(Icons.thumb_up),
+					label: Text('Confirmar'),
+					elevation: 10.0,
+					backgroundColor: Color(0xFF72351D)
+				),
+				floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+				body: SingleChildScrollView(
+					padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 80.0),
+					child: Form(
+						key: _formKey,
+						child: Column(
+							children: <Widget>[
+								textFormField(
+									controller: _name, 
+									error: "Insira o nome do véiculo", 
+									label: "Nome do Veículo"
+								),
+								textFormField(
+									controller: _board, 
+									error: "Insira a placa", 
+									label: "Placa"
+								),
+								textFormField(
+									controller: _color,
+									error: "Insira a cor", 
+									label: "Cor"
+								),
+								textFormField(
+									controller: _owner, 
+									error: "Insira o proprietário do veículo", 
+									label: "Proprietário"
+								),
+								textFormField(
+									controller: _phone, 
+									error: "Insira a telefone", 
+									label: "Telefone",
+									keyBoard: true,
+									local: "telefone"
+								),
+								textFormField(
+									controller: _locale, 
+									error: "Insira o local do veículo", 
+									label: "Local",
+									keyBoard: true,
+									local: "local"
+								)
+							]
 						)
 					)
 				)
@@ -189,7 +192,7 @@ class _CarPageState extends State<CarPage> {
 
 	Widget textFormField(
 		{TextEditingController controller, String error, 
-		String label, bool keyBoard, bool local}) {
+		String label, bool keyBoard, String local}) {
 			return Container(
 				margin: EdgeInsets.symmetric(horizontal: 40.0, vertical: 10.0),
 				width: 230.0,
@@ -222,16 +225,47 @@ class _CarPageState extends State<CarPage> {
 						return text.isEmpty ? error : null;
 					},
 					inputFormatters: [
-						local != null ? MaskedTextInputFormatterShifter(
+						local == "local" ? MaskedTextInputFormatterShifter(
                       		maskONE: "E-X", 
 							maskTWO: "E-XX"
+						) : local == "telefone" ? MaskedTextInputFormatterShifter(
+							maskONE: "XX-XXXXXXXXX", 
+							maskTWO: "XX-XXXXXXXXX"
 						) : MaskedTextInputFormatterShifter(
-							maskONE: "XXXXXXXXXXXXXXXXXX", 
-							maskTWO: "XXXXXXXXXXXXXXXXXX"
+							maskONE: "XXXXXXXXXXXXXXX", 
+							maskTWO: "XXXXXXXXXXXXXXX"
 						)
 					],
 					controller: controller
 				)
 			);
+	}
+
+	_showAlertDialog(BuildContext context) {
+		showDialog(
+			context: context,
+			builder: (BuildContext context) {
+				return AlertDialog(
+					title: Text(
+						"Vaga Inválida!",
+						style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30.0),
+						textAlign: TextAlign.center
+					),
+					content: Text(
+						"Vaga não existe ou está ocupada!",
+						style: TextStyle(fontWeight: FontWeight.bold, fontSize: 21.0),
+						textAlign: TextAlign.center
+					),
+					actions: [
+						FlatButton(
+							child: Text("Voltar"),
+							onPressed: () {
+								Navigator.pop(context);
+							}
+						)
+					]
+				);
+			}
+		);
 	}
 }

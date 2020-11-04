@@ -1,4 +1,5 @@
 import 'package:estaciona_car/models/car.dart';
+import 'package:estaciona_car/views/CarInfo.dart';
 import 'package:estaciona_car/views/CarPage.dart';
 import 'package:flutter/material.dart';
 
@@ -54,7 +55,7 @@ class _CarListState extends State<CarList> {
 					children: <Widget>[
 						Expanded(
 							child: Padding(
-								padding: const EdgeInsets.all(12.0),
+								padding: const EdgeInsets.all(8.0),
 								child: widget.car != null  ? Image(
 									image: widget.side != null ? 
 										AssetImage('images/carRight.png') :
@@ -67,8 +68,12 @@ class _CarListState extends State<CarList> {
 			),
 			onTap: () {
 				Navigator.push(context, MaterialPageRoute(
-					builder: (context) => CarPage(id: widget.index)
-				));
+					builder: (context) => widget.car != null ? 
+						CarInfo(car: widget.car) :
+						CarPage(id: widget.index)
+				)).then((res) { 
+					setState(() {});
+				});
 			}
 		);
 	}

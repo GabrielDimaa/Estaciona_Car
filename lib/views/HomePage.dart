@@ -40,12 +40,9 @@ class _HomePageState extends State<HomePage> {
 	Car checkLot(int index) {
 		int id_ = index + 1;
 		id_.toString();
-		print("localefuncção: $id_");
 
 		for(int i = 0; i < _listCar.length; i++) {
-			print(_listCar[i].locale);
 			if (_listCar[i].locale == id_.toString()) {
-				print("entrou");
 				return _listCar[i];
 			}
 		}
@@ -73,10 +70,13 @@ class _HomePageState extends State<HomePage> {
 				)
 			),
 			floatingActionButton: FloatingActionButton(
-				onPressed: () {
-					Navigator.push(context, MaterialPageRoute(
+				onPressed: () async {
+					await Navigator.push(context, MaterialPageRoute(
 						builder: (context) => CarPage()
 					));
+					setState(() {
+						_getAllCars();
+					});
 				},
 				child: Icon(Icons.add),
 				elevation: 10.0,
