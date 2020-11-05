@@ -3,7 +3,6 @@ import 'package:estaciona_car/controllers/carController.dart';
 import 'package:estaciona_car/models/car.dart';
 import 'package:estaciona_car/views/CarList.dart';
 import 'package:estaciona_car/views/CarPage.dart';
-import 'package:estaciona_car/views/Teste.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 
@@ -127,26 +126,24 @@ class _HomePageState extends State<HomePage> {
 										return GridTile(
 											child: 
 											_checked != null && index % 2 == 0 ? 
-												CarList(index: index, car: _checked) : 
+												CarList(index: index, car: _checked, onTap: () {_getAllCars();}) : 
 											_checked != null ? 
-												CarList(side: true, index: index, car: _checked) :
+												CarList(side: true, index: index, car: _checked, onTap: () {_getAllCars();}) :
 											index % 2 == 0 ?
-												CarList(index: index) :
-												CarList(side: true, index: index)
+												CarList(index: index, onTap: () {_getAllCars();}) :
+												CarList(side: true, index: index, onTap: () {_getAllCars();})
 										);
 									}
 								)
 							),
 							Container(
 								width: MediaQuery.of(context).size.width * 1,
-								height: MediaQuery.of(context).size.height * 1,
-								child: Teste()
+								height: MediaQuery.of(context).size.height * 1
 							),
 							Container(
 								color: Colors.amber, 
 								width: MediaQuery.of(context).size.width * 1,
-								height: MediaQuery.of(context).size.height * 1,
-								child: Teste()
+								height: MediaQuery.of(context).size.height * 1
 							),
 							Container(
 								color: Colors.purple, 

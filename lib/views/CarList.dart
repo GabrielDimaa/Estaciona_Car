@@ -1,14 +1,16 @@
 import 'package:estaciona_car/models/car.dart';
 import 'package:estaciona_car/views/CarInfo.dart';
 import 'package:estaciona_car/views/CarPage.dart';
+import 'package:estaciona_car/views/HomePage.dart';
 import 'package:flutter/material.dart';
 
 class CarList extends StatefulWidget {
+	final Function onTap;
 	final bool side;
 	final int index;
   	final Car car;
 
-	const CarList({this.side, this.index, this.car});
+	const CarList({this.onTap, this.side, this.index, this.car});
 
 	@override
 	_CarListState createState() => _CarListState();
@@ -66,14 +68,13 @@ class _CarListState extends State<CarList> {
 					]
 				)
 			),
-			onTap: () {
-				Navigator.push(context, MaterialPageRoute(
+			onTap: () async {
+				await Navigator.push(context, MaterialPageRoute(
 					builder: (context) => widget.car != null ? 
 						CarInfo(car: widget.car) :
 						CarPage(id: widget.index)
-				)).then((res) { 
-					setState(() {});
-				});
+				));
+				setState(() => widget.onTap());
 			}
 		);
 	}

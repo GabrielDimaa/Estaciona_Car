@@ -21,7 +21,7 @@ class _CarInfoState extends State<CarInfo> {
 	String _color;
 	String _owner;
 	String _phone;
-  	String _locale;
+  String _locale;
 	String _time;
 
 	String _timeCounter;
@@ -359,7 +359,7 @@ class _CarInfoState extends State<CarInfo> {
 							onPressed: () {
 								_deleteCar();
 								Navigator.pop(context);
-								Navigator.pop(context, true);
+								Navigator.pop(context);
 							}
 						)
 					]
