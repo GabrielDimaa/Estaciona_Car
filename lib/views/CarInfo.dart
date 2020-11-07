@@ -2,6 +2,7 @@ import 'package:estaciona_car/controllers/carController.dart';
 import 'package:estaciona_car/models/car.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+import 'package:fluttericon/web_symbols_icons.dart';
 
 class CarInfo extends StatefulWidget {
 	final Car car;
@@ -21,7 +22,7 @@ class _CarInfoState extends State<CarInfo> {
 	String _color;
 	String _owner;
 	String _phone;
-  String _locale;
+  	String _locale;
 	String _time;
 
 	String _timeCounter;
@@ -226,13 +227,12 @@ class _CarInfoState extends State<CarInfo> {
 	Widget build(BuildContext context) {
 		return Scaffold(
 			appBar: AppBar(
-				title: Text("Info"),
-				centerTitle: true,
+				title: Text("Info", style: TextStyle(fontSize: 25)),
 				flexibleSpace: Container(
 					decoration: BoxDecoration(
 						gradient: LinearGradient(
-							begin: Alignment.topLeft,
-							end: Alignment.bottomRight,
+							begin: Alignment.centerLeft,
+							end: Alignment.centerRight,
 							colors: <Color>[
 								Color(0xFF2B0948),
 								Color(0xFFCE653B)
@@ -241,87 +241,115 @@ class _CarInfoState extends State<CarInfo> {
 					)
 				)
 			),
-			body: Center(
-				child: Column(
-					mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-					children: <Widget>[
-						Container(
-							width: 260.0,
-							height: 230.0,
-							padding: EdgeInsets.all(27.0),
-							decoration: BoxDecoration(
-								borderRadius: BorderRadius.circular(120.0),
-								gradient: LinearGradient(
-									begin: Alignment.topCenter,
-									end: Alignment.bottomCenter,
-									colors: [
-										Color(0xFF2B0948),
-										Color(0xFFCE653B)
-									]
-								)
-							),
-							child: Column(
-								children: <Widget>[
-									Text("E2", style: TextStyle(
-										fontWeight: FontWeight.w400,
-										color: Colors.white,
-										fontSize: 35.0
-									)),
-									Expanded(
-										child: Image(
-											image: AssetImage('images/carTop.png')
+			body: Container(
+				width: MediaQuery.of(context).size.width,
+				height: MediaQuery.of(context).size.height,
+				decoration: BoxDecoration(
+					gradient: LinearGradient(
+						begin: Alignment.centerLeft,
+						end: Alignment.centerRight,
+						colors: <Color>[
+							Color(0xFF2B0948),
+							Color(0xFFCE653B)
+						]
+					)
+				),
+				child: Container(
+					margin: EdgeInsets.only(top: 6.0),
+					padding: EdgeInsets.only(top: 20.0, bottom: 10, left: 10, right: 10),
+					decoration: BoxDecoration(
+						borderRadius: BorderRadius.only(topLeft: Radius.circular(75), topRight: Radius.circular(75)),
+						color: Colors.white
+					),
+					child: Center(
+						child: Column(
+							mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+							children: <Widget>[
+								Container(
+									width: 260.0,
+									height: 230.0,
+									padding: EdgeInsets.all(27.0),
+									decoration: BoxDecoration(
+										borderRadius: BorderRadius.circular(120.0),
+										gradient: LinearGradient(
+											begin: Alignment.topCenter,
+											end: Alignment.bottomCenter,
+											colors: [
+												Color(0xFF2B0948),
+												Color(0xFFCE653B)
+											]
+										)
+									),
+									child: Column(
+										children: <Widget>[
+											Text("E2", style: TextStyle(
+												fontWeight: FontWeight.w400,
+												color: Colors.white,
+												fontSize: 35.0
+											)),
+											Expanded(
+												child: Image(
+													image: AssetImage('images/carTop.png')
+												)
+											)
+										]
+									)
+								),
+								Container(
+									child: Column(
+										children: <Widget>[
+											textInfo("$_name $_board, $_color"),
+											textInfo("$_owner, $_phone"),
+											textInfo("$_time")
+										]
+									)
+								),
+								Text(
+									"$_hour$_timeCounter",
+									style: TextStyle(
+										fontSize: 45.0,
+										color: Colors.black54,
+										fontWeight: FontWeight.bold
+									)
+								),
+								RaisedButton(
+									onPressed: () {
+										_getPrice();
+										_showAlertDialog(context);
+									},
+									shape: RoundedRectangleBorder(
+										borderRadius: BorderRadius.circular(30.0)
+									),
+									textColor: Colors.white,
+									padding: EdgeInsets.all(0.0),
+									child: Container(
+										child: Row(
+											mainAxisAlignment: MainAxisAlignment.center,
+											children: <Widget>[
+												Icon(WebSymbols.ok_circle),
+												Text('    Finalizar', style: TextStyle(fontSize: 19))
+											]
+										),
+										alignment: Alignment.center,
+										width: 250.0,
+										padding: EdgeInsets.all(12.0),
+										decoration: BoxDecoration(
+											gradient: LinearGradient(
+												begin: Alignment.centerLeft,
+												end: Alignment.centerRight,
+												colors: <Color>[
+													Color(0xFF76030F),
+													Color(0xFF121B67)
+												]
+											),
+											borderRadius: BorderRadius.all(Radius.circular(30.0))
 										)
 									)
-								]
-							)
-						),
-						Container(
-							child: Column(
-								children: <Widget>[
-									textInfo("$_name $_board, $_color"),
-									textInfo("$_owner, $_phone"),
-									textInfo("$_time")
-								]
-							)
-						),
-						Text(
-							"$_hour$_timeCounter",
-							style: TextStyle(
-								fontSize: 45.0,
-								color: Colors.black54,
-								fontWeight: FontWeight.bold
-							)
-						),
-						RaisedButton(
-							onPressed: () {
-								_getPrice();
-								_showAlertDialog(context);
-							},
-							shape: RoundedRectangleBorder(
-								borderRadius: BorderRadius.circular(30.0)
-							),
-							textColor: Colors.white,
-							padding: EdgeInsets.all(0.0),
-							child: Container(
-								child: Text('Finalizar', style: TextStyle(fontSize: 19)),
-								alignment: Alignment.center,
-								width: 250.0,
-								padding: EdgeInsets.all(12.0),
-								decoration: BoxDecoration(
-									gradient: LinearGradient(
-										begin: Alignment.topLeft,
-										end: Alignment.bottomRight,
-										colors: <Color>[
-											Color(0xFF2B0948),
-											Color(0xFFCE653B)
-										]
-									),
-									borderRadius: BorderRadius.all(Radius.circular(30.0))
 								)
-							)
-						)
-					]
-				),
+							]
+						),
+					)
+				)
 			)
 		);
 	}

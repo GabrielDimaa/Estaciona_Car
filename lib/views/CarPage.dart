@@ -2,6 +2,7 @@ import 'package:estaciona_car/controllers/carController.dart';
 import 'package:estaciona_car/models/car.dart';
 import 'package:flutter/material.dart';
 import 'package:mask_shifter/mask_shifter.dart';
+import 'package:fluttericon/web_symbols_icons.dart';
 
 class CarPage extends StatefulWidget {
 	final int id;
@@ -136,7 +137,7 @@ class _CarPageState extends State<CarPage> {
 								Navigator.pop(context);
 						}
 					},
-					icon: Icon(Icons.thumb_up),
+					icon: Icon(Icons.save),
 					label: Text('Confirmar'),
 					elevation: 10.0,
 					backgroundColor: Color(0xFF72351D)

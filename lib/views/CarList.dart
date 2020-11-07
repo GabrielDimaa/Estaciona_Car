@@ -30,26 +30,26 @@ class _CarListState extends State<CarList> {
 						right: widget.side != null ? 
 						BorderSide(
 							color: Colors.grey[400],
-							width: 3.0
+							width: 1.5
 						) : BorderSide(
 							color: Colors.transparent,
 							width: 0
 						),
 						top: BorderSide(
 							color: Colors.grey[400],
-							width: 3.0
+							width: 1.5
 						),
 						left: widget.side == null ? 
 						BorderSide(
 							color: Colors.grey[400],
-							width: 3.0
+							width: 1.5
 						) : BorderSide(
 							color: Colors.transparent,
 							width: 0
 						),
 						bottom: BorderSide(
 							color: Colors.grey[400],
-							width: 3.0
+							width: 1.5
 						)
 					)
 				),

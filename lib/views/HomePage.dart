@@ -3,6 +3,7 @@ import 'package:estaciona_car/controllers/carController.dart';
 import 'package:estaciona_car/models/car.dart';
 import 'package:estaciona_car/views/CarList.dart';
 import 'package:estaciona_car/views/CarPage.dart';
+import 'package:estaciona_car/views/CarsResume.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/entypo_icons.dart';
 
@@ -53,13 +54,15 @@ class _HomePageState extends State<HomePage> {
 	Widget build(BuildContext context) {
 		return Scaffold(
 			appBar: AppBar(
-				title: Text(_tabs[_selectedPosition]),
-				centerTitle: true,
+				title: Text(
+					_tabs[_selectedPosition],
+					style: TextStyle(fontSize: 25)
+				),
 				flexibleSpace: Container(
 					decoration: BoxDecoration(
 						gradient: LinearGradient(
-							begin: Alignment.topLeft,
-							end: Alignment.bottomRight,
+							begin: Alignment.centerLeft,
+							end: Alignment.centerRight,
 							colors: <Color>[
 								Color(0xFF2B0948),
 								Color(0xFFCE653B)
@@ -104,41 +107,59 @@ class _HomePageState extends State<HomePage> {
 					]
 				)
 			),
-			body: SingleChildScrollView(
-				padding: EdgeInsets.all(10.0),
+			body: Container(
+				width: MediaQuery.of(context).size.width,
+				height: MediaQuery.of(context).size.height,
+				decoration: BoxDecoration(
+					gradient: LinearGradient(
+						begin: Alignment.centerLeft,
+						end: Alignment.centerRight,
+						colors: [
+							Color(0xFF2B0948),
+							Color(0xFFCE653B)
+						]
+					)
+				),
 				child: Container(
-					child: IndexedStack( 
+					margin: EdgeInsets.only(top: 6.0),
+					padding: EdgeInsets.only(top: 45.0, bottom: 10, left: 10, right: 10),
+					decoration: BoxDecoration(
+						borderRadius: BorderRadius.only(topLeft: Radius.circular(75), topRight: Radius.circular(75)),
+						color: Colors.white
+					),
+					child:IndexedStack(
 						index: _selectedPosition,
-						children: <Widget>[
-							Container(
-								padding: EdgeInsets.only(bottom: 200.0),
-								width: MediaQuery.of(context).size.width,
-								height: MediaQuery.of(context).size.height,
-								child: GridView.builder(
-									gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-										crossAxisCount: 2,
-										childAspectRatio: MediaQuery.of(context).size.width / 
-											(MediaQuery.of(context).size.height / 4)
-									),
-									itemCount: 20,
-									itemBuilder: (context, index) {
-										_checked = checkLot(index);
-										return GridTile(
-											child: 
-											_checked != null && index % 2 == 0 ? 
-												CarList(index: index, car: _checked, onTap: () {_getAllCars();}) : 
-											_checked != null ? 
-												CarList(side: true, index: index, car: _checked, onTap: () {_getAllCars();}) :
-											index % 2 == 0 ?
-												CarList(index: index, onTap: () {_getAllCars();}) :
-												CarList(side: true, index: index, onTap: () {_getAllCars();})
-										);
-									}
+						children: <Widget> [
+							SingleChildScrollView(
+								child: Container(
+									padding: EdgeInsets.only(bottom: 200.0),
+									width: MediaQuery.of(context).size.width,
+									height: MediaQuery.of(context).size.height,
+									child: GridView.builder(
+										gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+											crossAxisCount: 2,
+											childAspectRatio: MediaQuery.of(context).size.width / 
+												(MediaQuery.of(context).size.height / 4)
+										),
+										itemCount: 20,
+										itemBuilder: (context, index) {
+											_checked = checkLot(index);
+											return GridTile(
+												child: 
+												_checked != null && index % 2 == 0 ? 
+													CarList(index: index, car: _checked, onTap: () {_getAllCars();}) : 
+												_checked != null ? 
+													CarList(side: true, index: index, car: _checked, onTap: () {_getAllCars();}) :
+												index % 2 == 0 ?
+													CarList(index: index, onTap: () {_getAllCars();}) :
+													CarList(side: true, index: index, onTap: () {_getAllCars();})
+											);
+										}
+									)
 								)
 							),
 							Container(
-								width: MediaQuery.of(context).size.width * 1,
-								height: MediaQuery.of(context).size.height * 1
+								child: CarsResume(size: _listCar.length)
 							),
 							Container(
 								color: Colors.amber, 
