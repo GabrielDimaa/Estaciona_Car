@@ -22,7 +22,7 @@ class _CarInfoState extends State<CarInfo> {
 	String _color;
 	String _owner;
 	String _phone;
-  	String _locale;
+  String _locale;
 	String _time;
 
 	String _timeCounter;
@@ -282,7 +282,7 @@ class _CarInfoState extends State<CarInfo> {
 									),
 									child: Column(
 										children: <Widget>[
-											Text("E2", style: TextStyle(
+											Text("E$_locale", style: TextStyle(
 												fontWeight: FontWeight.w400,
 												color: Colors.white,
 												fontSize: 35.0
