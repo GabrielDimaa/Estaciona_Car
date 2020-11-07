@@ -1,6 +1,6 @@
 <h1 align="center"> EstacionaCar </h1>
 
-## Descrição do Projeto
+## :clipboard: Descrição do Projeto
 <p align="justify">EstacionaCar é um aplicativo com a intenção gerenciar vagas de estacionamentos privadas.</p>
 
 <div>
@@ -22,7 +22,7 @@
 </p>
 
 ## :collision: Status do Projeto
-Status do Projeto: Concluído :hourglass_flowing_sand:
+Status do Projeto: Concluído :heavy_check_mark:
 
 ## :fire: Implementações e Tecnologias
 <h3>Widgets e Pubspec</h3>
